@@ -1,0 +1,1027 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Momen Penting</title>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Young+Serif&family=Nunito+Sans:wght@400;600;700&family=Caveat:wght@500;600&display=swap"
+    rel="stylesheet">
+  <style>
+    :root {
+      box-sizing: border-box;
+      padding-top: env(safe-area-inset-top, 0px);
+      padding-bottom: env(safe-area-inset-bottom, 0px);
+      --bg: #E8EBF6;
+      --paper: #FFFFFF;
+      --ink: #232B4A;
+      --muted: #5E6785;
+      --line: #CBD1E6;
+      --plum: #6F4A8E;
+      --plum-ink: #FFFFFF;
+      --gold: #F2B84B;
+      --soft: #F3F0FA;
+      color-scheme: light;
+    }
+
+    @media (prefers-color-scheme:dark) {
+      :root:not([data-theme="light"]) {
+        --bg: #171B33;
+        --paper: #222850;
+        --ink: #ECEEFA;
+        --muted: #A4ACCB;
+        --line: #38406E;
+        --plum: #B994D6;
+        --plum-ink: #1A1530;
+        --gold: #F2B84B;
+        --soft: #2C3262;
+        color-scheme: dark;
+      }
+    }
+
+    :root[data-theme="dark"] {
+      --bg: #171B33;
+      --paper: #222850;
+      --ink: #ECEEFA;
+      --muted: #A4ACCB;
+      --line: #38406E;
+      --plum: #B994D6;
+      --plum-ink: #1A1530;
+      --gold: #F2B84B;
+      --soft: #2C3262;
+      color-scheme: dark;
+    }
+
+    html {
+      scroll-padding-top: env(safe-area-inset-top, 0px)
+    }
+
+    *,
+    *::before,
+    *::after {
+      box-sizing: inherit
+    }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--ink);
+      font: 400 16px/1.55 "Nunito Sans", system-ui, sans-serif
+    }
+
+    .wrap {
+      max-width: 1040px;
+      margin: 0 auto;
+      padding: 28px 18px 56px
+    }
+
+    header {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 22px
+    }
+
+    h1 {
+      font: 400 clamp(2.2rem, 6vw, 3.4rem)/1.05 "Young Serif", Georgia, serif;
+      margin: 0
+    }
+
+    .sub {
+      color: var(--muted);
+      margin: 6px 0 0;
+      max-width: 46ch
+    }
+
+    .streak {
+      background: var(--gold);
+      color: #2A2108;
+      font-weight: 700;
+      padding: 8px 14px;
+      border-radius: 999px;
+      font-size: .95rem
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
+      gap: 20px
+    }
+
+    @media (max-width:820px) {
+      .grid {
+        grid-template-columns: minmax(0, 1fr)
+      }
+    }
+
+    .card {
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 20px
+    }
+
+    .card+.card {
+      margin-top: 20px
+    }
+
+    h2 {
+      font: 400 1.35rem/1.2 "Young Serif", Georgia, serif;
+      margin: 0 0 4px
+    }
+
+    .date {
+      color: var(--muted);
+      margin: 0 0 14px
+    }
+
+    .moods {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 12px
+    }
+
+    .mood {
+      font-size: 1.4rem;
+      line-height: 1;
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      border: 2px solid var(--line);
+      background: var(--soft);
+      cursor: pointer
+    }
+
+    .mood[aria-pressed="true"] {
+      border-color: var(--plum);
+      background: var(--paper);
+      transform: scale(1.08)
+    }
+
+    textarea,
+    input[type=search],
+    input[type=text],
+    input[type=date],
+    input[type=email],
+    input[type=password] {
+      width: 100%;
+      font: inherit;
+      color: var(--ink);
+      background: var(--soft);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 12px
+    }
+
+    textarea {
+      min-height: 200px;
+      resize: vertical;
+      font-family: "Caveat", cursive;
+      font-size: 1.45rem;
+      line-height: 1.35
+    }
+
+    textarea:focus-visible,
+    input:focus-visible,
+    button:focus-visible,
+    summary:focus-visible {
+      outline: 3px solid var(--plum);
+      outline-offset: 2px
+    }
+
+    .row {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 10px;
+      margin-top: 12px
+    }
+
+    .btn {
+      font: 700 .95rem "Nunito Sans", sans-serif;
+      border: 1px solid var(--plum);
+      background: var(--plum);
+      color: var(--plum-ink);
+      padding: 10px 18px;
+      border-radius: 999px;
+      cursor: pointer
+    }
+
+    .btn.ghost {
+      background: transparent;
+      color: var(--ink);
+      border-color: var(--line)
+    }
+
+    .btn.danger {
+      color: #B3261E;
+      border-color: #B3261E;
+      background: transparent
+    }
+
+    .status {
+      color: var(--muted);
+      font-size: .9rem
+    }
+
+    .count {
+      margin-left: auto;
+      color: var(--muted);
+      font-size: .85rem
+    }
+
+    .cal-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 10px
+    }
+
+    .cal-head button {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      border: 1px solid var(--line);
+      background: var(--soft);
+      color: var(--ink);
+      font-size: 1.1rem;
+      cursor: pointer
+    }
+
+    .cal {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 4px;
+      text-align: center
+    }
+
+    .dow {
+      font-size: .78rem;
+      color: var(--muted);
+      padding: 4px 0
+    }
+
+    .day {
+      aspect-ratio: 1;
+      border-radius: 10px;
+      border: 1px solid transparent;
+      background: transparent;
+      color: var(--ink);
+      font: inherit;
+      cursor: pointer;
+      position: relative
+    }
+
+    .day:disabled {
+      opacity: .35;
+      cursor: default
+    }
+
+    .day.has {
+      background: var(--soft);
+      border-color: var(--line);
+      font-weight: 700
+    }
+
+    .day.has::after {
+      content: "";
+      position: absolute;
+      left: 50%;
+      bottom: 5px;
+      width: 5px;
+      height: 5px;
+      margin-left: -2.5px;
+      border-radius: 50%;
+      background: var(--plum)
+    }
+
+    .day.today {
+      border-color: var(--gold);
+      border-width: 2px
+    }
+
+    .day.sel {
+      background: var(--plum);
+      color: var(--plum-ink)
+    }
+
+    .day.sel::after {
+      background: var(--plum-ink)
+    }
+
+    .random {
+      background: var(--soft);
+      border-radius: 14px;
+      padding: 14px 16px;
+      margin-top: 12px;
+      font-family: "Caveat", cursive;
+      font-size: 1.35rem;
+      line-height: 1.3;
+      white-space: pre-wrap
+    }
+
+    .random small {
+      display: block;
+      font: 600 .85rem "Nunito Sans", sans-serif;
+      color: var(--muted);
+      margin-bottom: 4px
+    }
+
+    .entry {
+      width: 100%;
+      text-align: left;
+      font: inherit;
+      color: var(--ink);
+      background: transparent;
+      border: 0;
+      border-top: 1px solid var(--line);
+      padding: 12px 2px;
+      cursor: pointer
+    }
+
+    .entry b {
+      display: block
+    }
+
+    .entry span {
+      color: var(--muted);
+      display: block;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap
+    }
+
+    .empty {
+      color: var(--muted);
+      margin: 10px 0 0
+    }
+
+    details {
+      margin-top: 20px
+    }
+
+    summary {
+      cursor: pointer;
+      color: var(--muted);
+      font-weight: 600
+    }
+
+    details textarea {
+      font: 400 .85rem/1.4 ui-monospace, Menlo, monospace;
+      min-height: 110px;
+      margin-top: 10px
+    }
+
+    .gal-head {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 14px
+    }
+
+    .gal {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+      gap: 12px
+    }
+
+    .ph {
+      border: 0;
+      padding: 0;
+      background: var(--soft);
+      border-radius: 14px;
+      overflow: hidden;
+      cursor: pointer;
+      text-align: left;
+      color: var(--ink);
+      font: inherit
+    }
+
+    .ph img {
+      display: block;
+      width: 100%;
+      aspect-ratio: 1;
+      object-fit: cover
+    }
+
+    .ph span {
+      display: block;
+      padding: 8px 10px
+    }
+
+    .ph b {
+      display: block;
+      font-size: .92rem;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap
+    }
+
+    .ph small {
+      color: var(--muted)
+    }
+
+    .ph:focus-visible {
+      outline: 3px solid var(--plum);
+      outline-offset: 2px
+    }
+
+    .rimg {
+      width: 100%;
+      max-height: 340px;
+      object-fit: cover;
+      border-radius: 14px;
+      display: block;
+      margin-top: 12px
+    }
+
+    .rcap {
+      margin: 8px 0 0
+    }
+
+    .rcap b {
+      display: block
+    }
+
+    .rcap small {
+      color: var(--muted)
+    }
+
+    dialog {
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      background: var(--paper);
+      color: var(--ink);
+      padding: 18px;
+      width: min(520px, calc(100% - 24px))
+    }
+
+    dialog::backdrop {
+      background: rgba(10, 12, 30, .55)
+    }
+
+    dialog img {
+      display: block;
+      width: 100%;
+      max-height: 50vh;
+      object-fit: contain;
+      border-radius: 12px;
+      background: var(--soft)
+    }
+
+    dialog label {
+      display: block;
+      margin-top: 10px;
+      font-weight: 600;
+      font-size: .9rem
+    }
+
+    dialog input,
+    dialog textarea {
+      margin-top: 4px
+    }
+
+    #dCap {
+      font: inherit;
+      min-height: 80px
+    }
+
+    .dh {
+      font: 700 .95rem "Nunito Sans", sans-serif;
+      margin: 22px 0 6px;
+      color: var(--muted)
+    }
+
+    .dm {
+      border-top: 1px solid var(--line);
+      padding: 12px 2px
+    }
+
+    .dm.on {
+      background: var(--soft);
+      border-radius: 10px;
+      padding: 12px
+    }
+
+    .dt {
+      color: var(--muted);
+      font-size: .85rem
+    }
+
+    .dm p {
+      margin: 4px 0 8px;
+      font-family: "Caveat", cursive;
+      font-size: 1.35rem;
+      line-height: 1.3;
+      white-space: pre-wrap
+    }
+
+    .dact {
+      display: flex;
+      gap: 8px
+    }
+
+    .sm {
+      font: 700 .85rem "Nunito Sans", sans-serif;
+      border: 1px solid var(--line);
+      background: transparent;
+      color: var(--ink);
+      padding: 5px 12px;
+      border-radius: 999px;
+      cursor: pointer
+    }
+
+    .sm.red {
+      color: #B3261E;
+      border-color: #B3261E
+    }
+
+    .toast {
+      position: fixed;
+      left: 50%;
+      bottom: calc(20px + env(safe-area-inset-bottom, 0px));
+      transform: translateX(-50%);
+      background: var(--ink);
+      color: var(--bg);
+      padding: 10px 18px;
+      border-radius: 999px;
+      font-weight: 700;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity .2s
+    }
+
+    .toast.on {
+      opacity: 1
+    }
+
+    @media (prefers-reduced-motion:reduce) {
+      * {
+        transition: none !important
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="wrap" id="authBox" hidden>
+    <h1>Momen Penting</h1>
+    <p class="sub" id="authMsg">Masuk untuk membuka pesan dan fotomu.</p>
+    <form class="card" id="authForm" style="max-width:420px;margin-top:20px">
+      <label for="aMail">Email</label>
+      <input type="email" id="aMail" autocomplete="email" required>
+      <label for="aPass" style="margin-top:10px">Kata sandi</label>
+      <input type="password" id="aPass" autocomplete="current-password" minlength="6" required>
+      <div class="row">
+        <button class="btn" type="submit" id="aIn">Masuk</button>
+        <button class="btn ghost" type="button" id="aUp">Daftar</button>
+      </div>
+      <p class="status" id="aErr" aria-live="polite"></p>
+    </form>
+  </div>
+
+  <div class="wrap" id="main" hidden>
+    <header>
+      <div>
+        <h1>Momen Penting</h1>
+        <p class="sub">Simpan foto momen yang berarti dan tulis pesan setiap hari, sebanyak yang kamu mau.</p>
+      </div>
+      <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap">
+        <div class="streak" id="streak" aria-live="polite"></div><button class="btn ghost" id="outBtn">Keluar</button>
+      </div>
+    </header>
+
+    <div class="grid">
+      <main>
+        <section class="card" aria-labelledby="edTitle">
+          <h2 id="edTitle">Pesan hari ini</h2>
+          <p class="date" id="edDate"></p>
+          <div class="moods" id="moods" role="group" aria-label="Perasaan hari ini"></div>
+          <label for="msg" class="status" style="display:block;margin-bottom:6px">Apa yang ingin kamu ingat dari hari
+            ini?</label>
+          <textarea id="msg" placeholder="Tulis di sini…"></textarea>
+          <div class="row">
+            <button class="btn" id="saveBtn">Simpan pesan</button>
+            <button class="btn ghost" id="todayBtn" hidden>Kembali ke hari ini</button>
+            <button class="btn ghost" id="cancelBtn" hidden>Batal ubah</button>
+            <span class="status" id="status" aria-live="polite"></span>
+            <span class="count" id="count"></span>
+          </div>
+          <div id="dayList"></div>
+        </section>
+
+        <section class="card" aria-labelledby="rndTitle">
+          <h2 id="rndTitle">Foto acak</h2>
+          <p class="date" style="margin:0">Satu momen dari koleksi fotomu.</p>
+          <div id="rnd" aria-live="polite"></div>
+          <div class="row"><button class="btn ghost" id="rndBtn">Tampilkan foto lain</button></div>
+        </section>
+      </main>
+
+      <aside>
+        <section class="card" aria-label="Kalender pesan">
+          <div class="cal-head">
+            <button id="prev" aria-label="Bulan sebelumnya">‹</button>
+            <h2 id="monthTitle" style="margin:0"></h2>
+            <button id="next" aria-label="Bulan berikutnya">›</button>
+          </div>
+          <div class="cal" id="cal"></div>
+        </section>
+
+        <section class="card" aria-labelledby="lsTitle">
+          <h2 id="lsTitle">Semua pesan</h2>
+          <input type="search" id="q" placeholder="Cari kata di pesanmu" aria-label="Cari pesan"
+            style="margin:10px 0 6px">
+          <div id="list"></div>
+        </section>
+
+        <details>
+          <summary>Cadangan data</summary>
+          <p class="status">Pesan dan fotomu tersimpan online di akun Supabase. Teks ini hanya salinan pesan. Untuk
+            memindahkan pesan dari versi lama, tempel teks cadangannya di sini lalu klik Pulihkan.</p>
+          <textarea id="bak" aria-label="Teks cadangan"></textarea>
+          <div class="row">
+            <button class="btn ghost" id="copyBtn">Salin cadangan</button>
+            <button class="btn ghost" id="restoreBtn">Pulihkan dari teks</button>
+          </div>
+        </details>
+      </aside>
+    </div>
+
+    <section class="card" style="margin-top:20px" aria-labelledby="galTitle">
+      <div class="gal-head">
+        <div>
+          <h2 id="galTitle">Foto momen penting</h2>
+          <p class="date" style="margin:0" id="galCount"></p>
+        </div>
+        <div>
+          <input type="file" id="file" accept="image/*" multiple hidden>
+          <button class="btn" id="addBtn">Tambah foto</button>
+        </div>
+      </div>
+      <div class="gal" id="gal"></div>
+      <p class="empty" id="galEmpty">Belum ada foto. Tambahkan foto pertama dari wisuda, perjalanan, atau hari yang
+        tidak ingin kamu lupakan.</p>
+    </section>
+  </div>
+
+  <dialog id="dlg" aria-label="Detail momen">
+    <img id="dImg" alt="">
+    <label for="dTitle">Judul momen</label>
+    <input type="text" id="dTitle" maxlength="80" placeholder="Contoh: Hari wisuda">
+    <label for="dDate">Tanggal</label>
+    <input type="date" id="dDate">
+    <label for="dCap">Catatan</label>
+    <textarea id="dCap" placeholder="Cerita singkat tentang momen ini"></textarea>
+    <div class="row">
+      <button class="btn" id="dSave">Simpan momen</button>
+      <button class="btn danger" id="dDel">Hapus foto</button>
+      <button class="btn ghost" id="dClose">Tutup</button>
+    </div>
+  </dialog>
+  <div class="toast" id="toast" role="status"></div>
+
+  <script>
+    (function () {
+      var SUPABASE_URL = 'https://cvgfnuvwajxhwfyuenkp.supabase.co', SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImN2Z2ZudXZ3YWp4aHdmeXVlbmtwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTI5MDMzMzcsImV4cCI6MjEwODQ3OTMzN30.cG3bqcLqRIx8v3zAu7Ym2n4fInZz06z58foYiEizAgceyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImN2Z2ZudXZ3YWp4aHdmeXVlbmtwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTI5MDMzMzcsImV4cCI6MjEwODQ3OTMzN30.cG3bqcLqRIx8v3zAu7Ym2n4fInZz06z58foYiEizAgc';
+      var BUCKET = 'momen', sb = null, user = null;
+      var KEY = 'kenangan-v1', MOODS = ['😊', '😌', '🥰', '🥹', '😢', '😤'];
+      var MOODNAME = ['Senang', 'Tenang', 'Bahagia', 'Haru', 'Sedih', 'Kesal'];
+      var store = {}, fallback = false;
+      var $ = function (id) { return document.getElementById(id) };
+      var now = new Date();
+      function key(d) { return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0') }
+      function parse(k) { var p = k.split('-'); return new Date(+p[0], +p[1] - 1, +p[2]) }
+      var todayK = key(now), sel = todayK, vy = now.getFullYear(), vm = now.getMonth(), mood = -1, delArmed = false;
+
+      function fmt(k, opt) { return parse(k).toLocaleDateString('id-ID', opt) }
+      function toast(t) { var el = $('toast'); el.textContent = t; el.classList.add('on'); setTimeout(function () { el.classList.remove('on') }, 1600) }
+
+      var editId = null;
+      function uid() { return Date.now().toString(36) + Math.random().toString(36).slice(2, 6) }
+      function has(k) { return !!(store[k] && store[k].length) }
+      function norm(x) { return { id: x.id || uid(), text: x.text, mood: typeof x.mood === 'number' ? x.mood : -1, created: x.created || x.updated || Date.now(), updated: x.updated || x.created || Date.now() } }
+      function timeStr(ts) { return new Date(ts).toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' }) }
+      function moodTxt(e) { return typeof e.mood === 'number' && e.mood > -1 ? MOODS[e.mood] + ' ' : '' }
+
+      function streak() {
+        var n = 0, d = new Date(now);
+        if (!has(key(d))) d.setDate(d.getDate() - 1);
+        while (has(key(d))) { n++; d.setDate(d.getDate() - 1) }
+        $('streak').textContent = n > 0 ? n + ' hari berturut-turut' : 'Mulai hari ini';
+      }
+
+      function renderMoods() {
+        var box = $('moods'); box.innerHTML = '';
+        MOODS.forEach(function (m, i) {
+          var b = document.createElement('button'); b.type = 'button'; b.className = 'mood'; b.textContent = m;
+          b.title = MOODNAME[i]; b.setAttribute('aria-label', MOODNAME[i]); b.setAttribute('aria-pressed', String(mood === i));
+          b.onclick = function () { mood = (mood === i ? -1 : i); renderMoods() };
+          box.appendChild(b);
+        });
+      }
+
+      function findMsg(id) { var a = store[sel] || []; for (var i = 0; i < a.length; i++)if (a[i].id === id) return a[i]; return null }
+
+      function loadEditor() {
+        var arr = store[sel] || [], e = editId ? findMsg(editId) : null;
+        if (!e) editId = null;
+        $('msg').value = e ? e.text : ''; mood = e ? e.mood : -1;
+        $('edDate').textContent = fmt(sel, { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
+        $('edTitle').textContent = editId ? 'Ubah pesan' : (sel === todayK ? 'Pesan hari ini' : 'Pesan di hari lain');
+        $('saveBtn').textContent = editId ? 'Simpan perubahan' : (arr.length ? 'Tambah pesan' : 'Simpan pesan');
+        $('todayBtn').hidden = sel === todayK; $('cancelBtn').hidden = !editId;
+        $('status').textContent = (!editId && arr.length) ? 'Sudah ada ' + arr.length + ' pesan. Tulis pesan lain jika mau.' : '';
+        count(); renderMoods(); renderDay();
+      }
+      function count() { var n = $('msg').value.length; $('count').textContent = n ? n + ' karakter' : '' }
+
+      function renderDay() {
+        var box = $('dayList'); box.innerHTML = '';
+        var arr = (store[sel] || []).slice().sort(function (a, b) { return a.created - b.created });
+        if (!arr.length) return;
+        var h = document.createElement('h3'); h.className = 'dh'; h.textContent = arr.length + ' pesan di tanggal ini'; box.appendChild(h);
+        arr.forEach(function (e) {
+          var d = document.createElement('div'); d.className = 'dm' + (e.id === editId ? ' on' : '');
+          var t = document.createElement('div'); t.className = 'dt'; t.textContent = moodTxt(e) + timeStr(e.created) + (e.updated > e.created + 1000 ? ' (diubah)' : '');
+          var p = document.createElement('p'); p.textContent = e.text;
+          var r = document.createElement('div'); r.className = 'dact';
+          var be = document.createElement('button'); be.type = 'button'; be.className = 'sm'; be.textContent = 'Ubah';
+          be.onclick = function () { editId = e.id; loadEditor(); $('msg').focus(); $('edTitle').scrollIntoView({ block: 'start', behavior: 'smooth' }) };
+          var bd = document.createElement('button'); bd.type = 'button'; bd.className = 'sm red'; bd.textContent = 'Hapus';
+          var armed = false;
+          bd.onclick = function () {
+            if (!armed) { armed = true; bd.textContent = 'Klik lagi untuk menghapus'; return }
+            var day = sel;
+            sb.from('messages').delete().eq('id', e.id).then(function (r) {
+              if (r.error) { toast('Gagal menghapus pesan'); return }
+              store[day] = (store[day] || []).filter(function (x) { return x.id !== e.id });
+              if (!store[day].length) delete store[day];
+              if (editId === e.id) editId = null;
+              refresh(); loadEditor(); toast('Pesan dihapus');
+            });
+          };
+          r.appendChild(be); r.appendChild(bd);
+          d.appendChild(t); d.appendChild(p); d.appendChild(r); box.appendChild(d);
+        });
+      }
+
+      function renderCal() {
+        $('monthTitle').textContent = new Date(vy, vm, 1).toLocaleDateString('id-ID', { month: 'long', year: 'numeric' });
+        var c = $('cal'); c.innerHTML = '';
+        ['Sen', 'Sel', 'Rab', 'Kam', 'Jum', 'Sab', 'Min'].forEach(function (d) { var s = document.createElement('div'); s.className = 'dow'; s.textContent = d; c.appendChild(s) });
+        var first = (new Date(vy, vm, 1).getDay() + 6) % 7, days = new Date(vy, vm + 1, 0).getDate();
+        for (var i = 0; i < first; i++)c.appendChild(document.createElement('div'));
+        for (var d = 1; d <= days; d++) {
+          var k = key(new Date(vy, vm, d)), b = document.createElement('button');
+          b.type = 'button'; b.className = 'day' + (has(k) ? ' has' : '') + (k === todayK ? ' today' : '') + (k === sel ? ' sel' : '');
+          b.textContent = d; b.disabled = k > todayK;
+          b.setAttribute('aria-label', fmt(k, { day: 'numeric', month: 'long' }) + (has(k) ? ', ' + store[k].length + ' pesan' : ''));
+          (function (k) { b.onclick = function () { sel = k; editId = null; loadEditor(); renderCal(); $('edTitle').scrollIntoView({ block: 'start', behavior: 'smooth' }) } })(k);
+          c.appendChild(b);
+        }
+      }
+
+      function renderList() {
+        var q = $('q').value.trim().toLowerCase(), box = $('list'); box.innerHTML = '';
+        var items = [];
+        Object.keys(store).forEach(function (k) { (store[k] || []).forEach(function (e) { if (!q || e.text.toLowerCase().indexOf(q) > -1) items.push({ k: k, e: e }) }) });
+        items.sort(function (a, b) { return a.k < b.k ? 1 : a.k > b.k ? -1 : b.e.created - a.e.created });
+        if (!items.length) { var p = document.createElement('p'); p.className = 'empty'; p.textContent = q ? 'Tidak ada pesan yang cocok.' : 'Belum ada pesan. Tulis yang pertama di sebelah kiri.'; box.appendChild(p); return }
+        items.forEach(function (it) {
+          var e = it.e, b = document.createElement('button'); b.type = 'button'; b.className = 'entry';
+          var t = document.createElement('b'); t.textContent = moodTxt(e) + fmt(it.k, { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' }) + ', ' + timeStr(e.created);
+          var s = document.createElement('span'); s.textContent = e.text.replace(/\s+/g, ' ');
+          b.appendChild(t); b.appendChild(s);
+          b.onclick = function () { sel = it.k; editId = null; vy = parse(it.k).getFullYear(); vm = parse(it.k).getMonth(); loadEditor(); renderCal(); $('edTitle').scrollIntoView({ block: 'start', behavior: 'smooth' }) };
+          box.appendChild(b);
+        });
+      }
+
+      function renderBackup() { $('bak').value = JSON.stringify(store) }
+      function refresh() { streak(); renderCal(); renderList(); renderBackup() }
+
+      $('msg').addEventListener('input', count);
+      $('q').addEventListener('input', renderList);
+      $('saveBtn').onclick = function () {
+        var t = $('msg').value.trim();
+        if (!t) { $('status').textContent = 'Tulis sesuatu dulu sebelum menyimpan.'; $('msg').focus(); return }
+        var btn = this, day = sel, wasEdit = !!editId, e = wasEdit ? findMsg(editId) : null;
+        btn.disabled = true;
+        var op = e ? sb.from('messages').update({ text: t, mood: mood, updated_at: new Date().toISOString() }).eq('id', e.id).select().single()
+          : sb.from('messages').insert({ day: day, text: t, mood: mood }).select().single();
+        op.then(function (r) {
+          btn.disabled = false;
+          if (r.error) { toast('Gagal menyimpan. Coba lagi.'); return }
+          var m = mapMsg(r.data);
+          if (e) Object.assign(e, m); else (store[day] || (store[day] = [])).push(m);
+          editId = null; refresh(); loadEditor(); toast(wasEdit ? 'Perubahan tersimpan' : 'Pesan tersimpan');
+        });
+      };
+      $('cancelBtn').onclick = function () { editId = null; loadEditor() };
+      $('todayBtn').onclick = function () { sel = todayK; editId = null; vy = now.getFullYear(); vm = now.getMonth(); loadEditor(); renderCal() };
+      $('prev').onclick = function () { vm--; if (vm < 0) { vm = 11; vy-- } renderCal() };
+      $('next').onclick = function () { vm++; if (vm > 11) { vm = 0; vy++ } renderCal() };
+      $('copyBtn').onclick = function () {
+        var t = $('bak'); t.select();
+        try { if (navigator.clipboard) { navigator.clipboard.writeText(t.value).then(function () { toast('Cadangan disalin') }, function () { document.execCommand('copy'); toast('Cadangan disalin') }) } else { document.execCommand('copy'); toast('Cadangan disalin') } } catch (e) { toast('Salin manual dari kotak teks') }
+      };
+      $('restoreBtn').onclick = function () {
+        var rows = [];
+        try {
+          var o = JSON.parse($('bak').value);
+          if (!o || typeof o !== 'object' || Array.isArray(o)) throw 0;
+          Object.keys(o).forEach(function (k) {
+            if (!/^\d{4}-\d{2}-\d{2}$/.test(k)) return;
+            var v = o[k], list = Array.isArray(v) ? v : [v];
+            list.forEach(function (x) {
+              if (!x || typeof x.text !== 'string') return;
+              var e = norm(x);
+              if ((store[k] || []).some(function (y) { return y.text === e.text && Math.abs(y.created - e.created) < 2000 })) return;
+              rows.push({ day: k, text: e.text, mood: e.mood, created_at: new Date(e.created).toISOString(), updated_at: new Date(e.updated).toISOString() });
+            });
+          });
+        } catch (err) { toast('Teks cadangan tidak valid'); return }
+        if (!rows.length) { toast('Tidak ada pesan baru untuk dipulihkan'); return }
+        sb.from('messages').insert(rows).then(function (r) {
+          if (r.error) { toast('Gagal memulihkan'); return }
+          loadAll(function () { refresh(); loadEditor(); renderGallery(); showRandom(); toast(rows.length + ' pesan dipulihkan') });
+        });
+      };
+
+      /* ---------- Foto momen penting (IndexedDB) ---------- */
+      var photos = [], cur = null, dDelArmed = false, lastRnd = null;
+      function mapMsg(r) { return { id: r.id, text: r.text, mood: r.mood == null ? -1 : r.mood, created: Date.parse(r.created_at), updated: Date.parse(r.updated_at) } }
+      function photoFrom(x, url) { return { id: x.id, path: x.path, img: url || '', title: x.title || '', caption: x.caption || '', date: x.taken_on, added: Date.parse(x.created_at) } }
+      function shrink(file, cb) {
+        var fr = new FileReader();
+        fr.onload = function () {
+          var im = new Image();
+          im.onload = function () {
+            var m = 1600, s = Math.min(1, m / Math.max(im.width, im.height)), c = document.createElement('canvas');
+            c.width = Math.max(1, Math.round(im.width * s)); c.height = Math.max(1, Math.round(im.height * s));
+            c.getContext('2d').drawImage(im, 0, 0, c.width, c.height);
+            c.toBlob(function (b) { cb(b) }, 'image/jpeg', 0.82);
+          };
+          im.onerror = function () { cb(null) };
+          im.src = fr.result;
+        };
+        fr.onerror = function () { cb(null) };
+        fr.readAsDataURL(file);
+      }
+      function loadAll(cb) {
+        store = {}; photos = [];
+        sb.from('messages').select('*').order('created_at').limit(5000).then(function (r) {
+          if (r.error) toast('Gagal memuat pesan');
+          else (r.data || []).forEach(function (m) { (store[m.day] || (store[m.day] = [])).push(mapMsg(m)) });
+          sb.from('photos').select('*').limit(5000).then(function (q) {
+            var rows = q.error ? [] : (q.data || []);
+            if (q.error) toast('Gagal memuat foto');
+            if (!rows.length) return cb();
+            sb.storage.from(BUCKET).createSignedUrls(rows.map(function (x) { return x.path }), 21600).then(function (s) {
+              var m = {}; (s.data || []).forEach(function (u) { if (u.signedUrl) m[u.path] = u.signedUrl });
+              rows.forEach(function (x) { photos.push(photoFrom(x, m[x.path])) });
+              cb();
+            });
+          });
+        });
+      }
+      function sortedPhotos() { return photos.slice().sort(function (a, b) { return a.date < b.date ? 1 : a.date > b.date ? -1 : b.added - a.added }) }
+      function pTitle(p) { return p.title || 'Momen tanpa judul' }
+      function pDate(p) { return fmt(p.date, { day: 'numeric', month: 'long', year: 'numeric' }) }
+
+      function renderGallery() {
+        var g = $('gal'); g.innerHTML = '';
+        var list = sortedPhotos();
+        $('galCount').textContent = list.length ? list.length + ' foto' : '';
+        $('galEmpty').hidden = list.length > 0;
+        list.forEach(function (p) {
+          var b = document.createElement('button'); b.type = 'button'; b.className = 'ph';
+          var im = document.createElement('img'); im.src = p.img; im.alt = pTitle(p); im.loading = 'lazy';
+          var sp = document.createElement('span'), t = document.createElement('b'), d = document.createElement('small');
+          t.textContent = pTitle(p); d.textContent = pDate(p); sp.appendChild(t); sp.appendChild(d);
+          b.appendChild(im); b.appendChild(sp);
+          b.onclick = function () { openPhoto(p.id) };
+          g.appendChild(b);
+        });
+      }
+
+      function showRandom() {
+        var box = $('rnd'); box.innerHTML = '';
+        if (!photos.length) {
+          var p = document.createElement('p'); p.className = 'empty'; p.textContent = 'Belum ada foto. Tambahkan foto momen penting di bagian bawah halaman.'; box.appendChild(p);
+          $('rndBtn').hidden = true; return;
+        }
+        $('rndBtn').hidden = false;
+        var pool = photos.filter(function (x) { return x.id !== lastRnd });
+        if (!pool.length) pool = photos;
+        var p2 = pool[Math.floor(Math.random() * pool.length)]; lastRnd = p2.id;
+        var im = document.createElement('img'); im.className = 'rimg'; im.src = p2.img; im.alt = pTitle(p2);
+        var cap = document.createElement('p'); cap.className = 'rcap';
+        var t = document.createElement('b'), d = document.createElement('small');
+        t.textContent = pTitle(p2); d.textContent = pDate(p2); cap.appendChild(t); cap.appendChild(d);
+        if (p2.caption) { var c = document.createElement('span'); c.textContent = p2.caption; cap.appendChild(c) }
+        box.appendChild(im); box.appendChild(cap);
+      }
+
+      function openPhoto(id) {
+        cur = photos.filter(function (x) { return x.id === id })[0]; if (!cur) return;
+        $('dImg').src = cur.img; $('dImg').alt = pTitle(cur);
+        $('dTitle').value = cur.title || ''; $('dDate').value = cur.date; $('dCap').value = cur.caption || '';
+        dDelArmed = false; $('dDel').textContent = 'Hapus foto';
+        $('dlg').showModal();
+      }
+      $('dClose').onclick = function () { $('dlg').close() };
+      $('dSave').onclick = function () {
+        if (!cur) return;
+        var p = cur, t = $('dTitle').value.trim(), c = $('dCap').value.trim(), d = $('dDate').value || p.date;
+        sb.from('photos').update({ title: t, caption: c, taken_on: d }).eq('id', p.id).then(function (r) {
+          if (r.error) { toast('Gagal menyimpan momen'); return }
+          p.title = t; p.caption = c; p.date = d; renderGallery(); $('dlg').close(); toast('Momen tersimpan');
+        });
+      };
+      $('dDel').onclick = function () {
+        if (!cur) return;
+        if (!dDelArmed) { dDelArmed = true; $('dDel').textContent = 'Klik lagi untuk menghapus'; return }
+        var p = cur;
+        sb.from('photos').delete().eq('id', p.id).then(function (r) {
+          if (r.error) { toast('Gagal menghapus foto'); return }
+          sb.storage.from(BUCKET).remove([p.path]);
+          photos = photos.filter(function (x) { return x.id !== p.id });
+          if (lastRnd === p.id) lastRnd = null;
+          renderGallery(); showRandom(); $('dlg').close(); toast('Foto dihapus');
+        });
+      };
+
+      $('addBtn').onclick = function () { $('file').click() };
+      $('file').onchange = function () {
+        var files = Array.prototype.slice.call(this.files || []).filter(function (f) { return /^image\//.test(f.type) });
+        this.value = '';
+        if (!files.length) return;
+        var done = 0, fail = 0;
+        toast('Mengunggah ' + files.length + ' foto…');
+        (function next(i) {
+          if (i >= files.length) { renderGallery(); showRandom(); toast(done + ' foto ditambahkan' + (fail ? ', ' + fail + ' gagal' : '')); return }
+          var f = files[i];
+          shrink(f, function (blob) {
+            if (!blob) { fail++; return next(i + 1) }
+            var path = user.id + '/' + uid() + '.jpg';
+            sb.storage.from(BUCKET).upload(path, blob, { contentType: 'image/jpeg' }).then(function (u) {
+              if (u.error) { fail++; return next(i + 1) }
+              sb.from('photos').insert({ path: path, taken_on: key(new Date(f.lastModified || Date.now())) }).select().single().then(function (r) {
+                if (r.error) { sb.storage.from(BUCKET).remove([path]); fail++; return next(i + 1) }
+                sb.storage.from(BUCKET).createSignedUrl(path, 21600).then(function (s) {
+                  photos.push(photoFrom(r.data, s.data && s.data.signedUrl)); done++; next(i + 1);
+                });
+              });
+            });
+          });
+        })(0);
+      };
+      $('rndBtn').onclick = showRandom;
+
+      function showAuth(msg) { $('main').hidden = true; $('authBox').hidden = false; if (msg) $('authMsg').textContent = msg }
+      function enter() {
+        $('authBox').hidden = true; $('main').hidden = false;
+        loadAll(function () { sel = todayK; editId = null; loadEditor(); refresh(); renderGallery(); showRandom() });
+      }
+      function authGo(mode) {
+        var em = $('aMail').value.trim(), pw = $('aPass').value;
+        if (!em || pw.length < 6) { $('aErr').textContent = 'Isi email dan kata sandi minimal 6 karakter.'; return }
+        $('aErr').textContent = 'Memproses…';
+        var p = mode === 'in' ? sb.auth.signInWithPassword({ email: em, password: pw }) : sb.auth.signUp({ email: em, password: pw });
+        p.then(function (r) {
+          if (r.error) { $('aErr').textContent = r.error.message; return }
+          $('aErr').textContent = (mode === 'up' && !r.data.session) ? 'Akun dibuat. Cek email untuk konfirmasi, lalu masuk.' : '';
+        });
+      }
+      $('authForm').onsubmit = function (ev) { ev.preventDefault(); authGo('in') };
+      $('aUp').onclick = function () { authGo('up') };
+      $('outBtn').onclick = function () { if (sb) sb.auth.signOut() };
+      $('main').addEventListener('click', function () { });
+
+      if (!window.supabase || /ISI_/.test(SUPABASE_URL + SUPABASE_KEY)) {
+        showAuth('Belum terhubung. Isi SUPABASE_URL dan SUPABASE_KEY di bagian atas script pada index.html.');
+        $('authForm').hidden = true;
+      } else {
+        sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+        sb.auth.onAuthStateChange(function (ev, session) {
+          var u = session && session.user;
+          if (u && (!user || user.id !== u.id)) { user = u; setTimeout(enter, 0) }
+          else if (!u && user) { user = null; store = {}; photos = []; setTimeout(function () { showAuth('Kamu sudah keluar.') }, 0) }
+        });
+        sb.auth.getSession().then(function (r) { if (!r.data.session) showAuth('Masuk untuk membuka pesan dan fotomu.') });
+      }
+    })();
+  </script>
+</body>
+
+</html>
